@@ -20,7 +20,9 @@ You will also need to provide a text file (.txt) with json formatted information
 The executable is the name of the .exe in the directory.  No directory structure is needed.
 
 Finally you will need to provide a square png image called **card.png** to the same directory.  This will be the cover image that shows when your game is selected.  Your directory should look like this:
+
 ![image](http://i.imgur.com/mwYWGjN.png)
 
 If all is done correctly, you should see something like this:
+
 ![image](http://i.imgur.com/nc5k2xF.png)
