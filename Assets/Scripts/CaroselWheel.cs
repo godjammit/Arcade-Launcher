@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Prime31.GoKitLite;
 using UnityEngine;
 using System.Collections;
@@ -25,9 +26,16 @@ public class CaroselWheel : MonoBehaviour
     {   
         DataLoader dl = new DataLoader();
         List<GameAsset> assets = dl.GetGameAssetsList();
-        InstantiateGames(assets);
-        SetUpGamesAtStart();
-        UpdateData();
+        if (!assets.Any())
+        {
+            title.text = "No Games Found";
+        }
+        else
+        {
+            InstantiateGames(assets);
+            SetUpGamesAtStart();
+            UpdateData();   
+        }
     }
 
     private void InstantiateGames(List<GameAsset> a)
@@ -67,20 +75,44 @@ public class CaroselWheel : MonoBehaviour
 
     private void Update()
     {
-        if (currentPosition > 0 && Input.GetKeyDown(KeyCode.LeftArrow)) // move to left game
+        if (currentPosition > 0 && GetKeyInputLeft()) // move to left game
         {
             ShiftTilesRight(currentPosition);
             UpdateData();
         }
-        else if (currentPosition < games.Length - 1 && Input.GetKeyDown(KeyCode.RightArrow)) // move to right game
+        else if (currentPosition < games.Length - 1 && GetKeyInputRight()) // move to right game
         {
             ShiftTilesLeft(currentPosition);
             UpdateData();
         }
-        else if (Input.GetKeyDown(KeyCode.Return))
+        else if (GetKeyInputButton1())
         {
             LaunchGame();
         }
+    }
+
+    private bool GetKeyInputLeft()
+    {
+        return Input.GetButtonDown("P1_Left")
+            || Input.GetButtonDown("P2_Left")
+            || Input.GetButtonDown("P3_Left")
+            || Input.GetButtonDown("P4_Left");
+    }
+
+    private bool GetKeyInputRight()
+    {
+        return Input.GetButtonDown("P1_Right")
+            || Input.GetButtonDown("P2_Right")
+            || Input.GetButtonDown("P3_Right")
+            || Input.GetButtonDown("P4_Right");
+    }
+
+    private bool GetKeyInputButton1()
+    {
+        return Input.GetButtonDown("P1_Button1")
+            || Input.GetButtonDown("P2_Button1")
+            || Input.GetButtonDown("P3_Button1")
+            || Input.GetButtonDown("P4_Button1");
     }
 
     private void ShiftTilesRight(int current)
