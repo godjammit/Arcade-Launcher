@@ -14,7 +14,7 @@ public class CaroselWheel : MonoBehaviour
     public Vector3 rightScreen;
     public Vector3 rightOffScreen;
 
-    public UILabel title, author, players;
+    public TextMesh title, author, players;
 
     public GameObject gamePrefab;
     private GameObject[] games;
