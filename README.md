@@ -3,6 +3,8 @@ Arcade-Launcher
 
 A game launcher written in Unity3D for the Arcade Cabinet.  This code base requires the NGUI asset to build properly.  The purpose of the launcher is to facilitate the development of games for the arcade cabinet.  The launcher is designed to read from a shared directory where developers can upload builds and other necessary files without needing to modify the launcher directly.
 
+There's a release available for local testing: https://github.com/DSOP/Arcade-Launcher/releases
+
 ## Instructions for Developers
 
 You will first need to build an executable artifact for your game.  If you are using Unity3D for example, you will need to target Windows and place both the exe and the data folder into the shared directory.
