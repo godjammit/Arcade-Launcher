@@ -9,6 +9,8 @@ There's a release available for local testing: https://github.com/DSOP/Arcade-La
 
 * The resolution target for the arcade cabinet is 1920x1080.
 * Please have your game launch to full screen.
+* Please set 'Edit>Project Settings>Player - Set Display Resolution Dialog' to 'Disabled'
+* Please make sure your game quits when the P key is pressed.  
 
 You will first need to build an executable artifact for your game.  If you are using Unity3D for example, you will need to target Windows and place both the exe and the data folder into the shared directory.
 

@@ -24,6 +24,12 @@ public class CaroselWheel : MonoBehaviour
 
     private void Start()
     {   
+    	//make sure settings are set to windowed 1080p (reboot exe to take effect)
+		PlayerPrefs.SetInt("Screenmanager Is Fullscreen mode", 0);
+		PlayerPrefs.SetInt("Screenmanager Resolution Width", 1920);
+		PlayerPrefs.SetInt("Screenmanager Resolution Height", 1080);
+
+
         DataLoader dl = new DataLoader();
         List<GameAsset> assets = dl.GetGameAssetsList();
         if (!assets.Any())
@@ -36,6 +42,8 @@ public class CaroselWheel : MonoBehaviour
             SetUpGamesAtStart();
             UpdateData();   
         }
+
+
     }
 
     private void InstantiateGames(List<GameAsset> a)
@@ -75,6 +83,10 @@ public class CaroselWheel : MonoBehaviour
 
     private void Update()
     {
+    	//prevent null ref when no games are found
+		if(games == null)
+			return;
+
         if (currentPosition > 0 && GetKeyInputLeft()) // move to left game
         {
             ShiftTilesRight(currentPosition);
