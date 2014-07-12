@@ -15,12 +15,16 @@ public class CaroselWheel : MonoBehaviour
     public Vector3 rightScreen;
     public Vector3 rightOffScreen;
 
-    public TextMesh title, author, players;
+    public TextMesh title, author, players, loading;
 
     public GameObject gamePrefab;
     private GameObject[] games;
     private GameAsset[] gameAssets;
     private int currentPosition = 0;
+
+    private bool input = false;
+    private float currentTime;
+
 
     private void Start()
     {   
@@ -87,6 +91,16 @@ public class CaroselWheel : MonoBehaviour
 		if(games == null)
 			return;
 
+        if (input)
+        {
+            if ((currentTime += Time.deltaTime) > 2f)
+            {
+                currentTime = 0;
+                input = false;
+                loading.text = "";
+            }
+        }
+
         if (currentPosition > 0 && GetKeyInputLeft()) // move to left game
         {
             ShiftTilesRight(currentPosition);
@@ -97,9 +111,13 @@ public class CaroselWheel : MonoBehaviour
             ShiftTilesLeft(currentPosition);
             UpdateData();
         }
-        else if (GetKeyInputButton1())
+        
+        if (!input && GetKeyInputButton1())
         {
-            LaunchGame();
+            input = true;
+            loading.text = "Loading";
+            Debug.Log("load");
+            StartCoroutine(LaunchGame());
         }
     }
 
@@ -121,10 +139,11 @@ public class CaroselWheel : MonoBehaviour
 
     private bool GetKeyInputButton1()
     {
-        return Input.GetButtonDown("P1_Button1")
-            || Input.GetButtonDown("P2_Button1")
-            || Input.GetButtonDown("P3_Button1")
-            || Input.GetButtonDown("P4_Button1");
+        // FIXME: temp fix to only allow player 1 to select games.
+        return Input.GetButtonDown("P1_Button1");
+           // || Input.GetButtonDown("P2_Button1")
+           // || Input.GetButtonDown("P3_Button1")
+           // || Input.GetButtonDown("P4_Button1");
     }
 
     private void ShiftTilesRight(int current)
@@ -182,12 +201,15 @@ public class CaroselWheel : MonoBehaviour
         Game data = gameAssets[currentPosition].GameData;
         title.text = data.Title;
         author.text = data.Author;
-        players.text = data.Players + ((data.Players == 1) ? " Player" : " Players");
+        if (data.PlayerMax == data.PlayerMin)
+            players.text = data.PlayersMin + ((data.PlayersMin == 1) ? " Player" : " Players");
+        else
+            players.text = data.PlayersMin + " to " + data.PlayersMax + " Players";
     }
 
-    private void LaunchGame()
+    private IEnumerator LaunchGame()
     {
-        Debug.Log(gameAssets[currentPosition].ExecutablePath);
+        yield return new WaitForSeconds(0f);
         System.Diagnostics.Process.Start(gameAssets[currentPosition].ExecutablePath);
     }
 }
