@@ -1,0 +1,7 @@
+{
+"title":"game",
+"author":"dan",
+"playersMin":1,
+"playersMax":4,
+"executable":"sss.exe"
+}

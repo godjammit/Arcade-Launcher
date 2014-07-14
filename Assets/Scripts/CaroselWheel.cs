@@ -32,7 +32,7 @@ public class CaroselWheel : MonoBehaviour
 		PlayerPrefs.SetInt("Screenmanager Is Fullscreen mode", 0);
 		PlayerPrefs.SetInt("Screenmanager Resolution Width", 1920);
 		PlayerPrefs.SetInt("Screenmanager Resolution Height", 1080);
-
+        Screen.showCursor = false;
 
         DataLoader dl = new DataLoader();
         List<GameAsset> assets = dl.GetGameAssetsList();
@@ -96,7 +96,7 @@ public class CaroselWheel : MonoBehaviour
             if ((currentTime += Time.deltaTime) > 2f)
             {
                 currentTime = 0;
-                input = false;
+                //input = false;
                 loading.text = "";
             }
         }
@@ -112,12 +112,12 @@ public class CaroselWheel : MonoBehaviour
             UpdateData();
         }
         
-        if (!input && GetKeyInputButton1())
+		if (!isLaunching && GetKeyInputButton1())
         {
             input = true;
             loading.text = "Loading";
             Debug.Log("load");
-            StartCoroutine(LaunchGame());
+            LaunchGame();
         }
     }
 
@@ -201,15 +201,30 @@ public class CaroselWheel : MonoBehaviour
         Game data = gameAssets[currentPosition].GameData;
         title.text = data.Title;
         author.text = data.Author;
-        if (data.PlayerMax == data.PlayerMin)
+        if (data.PlayersMax == data.PlayersMin)
             players.text = data.PlayersMin + ((data.PlayersMin == 1) ? " Player" : " Players");
         else
             players.text = data.PlayersMin + " to " + data.PlayersMax + " Players";
     }
 
-    private IEnumerator LaunchGame()
+
+	bool isLaunching = false;
+	float launchCooldown = 5f;
+
+    private void LaunchGame()
     {
-        yield return new WaitForSeconds(0f);
+		if(isLaunching)
+			return;
+
         System.Diagnostics.Process.Start(gameAssets[currentPosition].ExecutablePath);
+
+		StartCoroutine( LaunchCooldownRoutine() );
     }
+
+	private IEnumerator LaunchCooldownRoutine()
+	{
+		isLaunching = true;
+		yield return new WaitForSeconds(launchCooldown);
+		isLaunching = false;
+	}
 }
