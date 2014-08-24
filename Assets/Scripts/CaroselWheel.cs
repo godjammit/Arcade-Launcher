@@ -24,10 +24,17 @@ public class CaroselWheel : MonoBehaviour
 
     private bool input = false;
     private float currentTime;
+    private State _currentState;
+
+    float launchCooldown = 15f;
+
+    private enum State { Selecting, Playing }
 
 
     private void Start()
-    {   
+    {  
+        _currentState = State.Selecting;
+
     	//make sure settings are set to windowed 1080p (reboot exe to take effect)
 		PlayerPrefs.SetInt("Screenmanager Is Fullscreen mode", 0);
 		PlayerPrefs.SetInt("Screenmanager Resolution Width", 1920);
@@ -101,24 +108,28 @@ public class CaroselWheel : MonoBehaviour
             }
         }
 
-        if (currentPosition > 0 && GetKeyInputLeft()) // move to left game
+        if (_currentState == State.Selecting)
         {
-            ShiftTilesRight(currentPosition);
-            UpdateData();
-        }
-        else if (currentPosition < games.Length - 1 && GetKeyInputRight()) // move to right game
-        {
-            ShiftTilesLeft(currentPosition);
-            UpdateData();
+            if (currentPosition > 0 && GetKeyInputLeft()) // move to left game
+            {
+                ShiftTilesRight(currentPosition);
+                UpdateData();
+            }
+            else if (currentPosition < games.Length - 1 && GetKeyInputRight()) // move to right game
+            {
+                ShiftTilesLeft(currentPosition);
+                UpdateData();
+            }
+
+            if (GetKeyInputButton1())
+            {
+                input = true;
+                loading.text = "Loading";
+                Debug.Log("load");
+                LaunchGame();
+            }
         }
         
-		if (!isLaunching && GetKeyInputButton1())
-        {
-            input = true;
-            loading.text = "Loading";
-            Debug.Log("load");
-            LaunchGame();
-        }
     }
 
     private bool GetKeyInputLeft()
@@ -202,29 +213,33 @@ public class CaroselWheel : MonoBehaviour
         title.text = data.Title;
         author.text = data.Author;
         if (data.PlayersMax == data.PlayersMin)
+        {
             players.text = data.PlayersMin + ((data.PlayersMin == 1) ? " Player" : " Players");
+        }
         else
+        {
             players.text = data.PlayersMin + " to " + data.PlayersMax + " Players";
+        }
     }
 
 
-	bool isLaunching = false;
-	float launchCooldown = 5f;
+	
 
     private void LaunchGame()
     {
-		if(isLaunching)
-			return;
+        if (_currentState == State.Playing)
+        {
+            return;
+        }	
 
         System.Diagnostics.Process.Start(gameAssets[currentPosition].ExecutablePath);
-
-		StartCoroutine( LaunchCooldownRoutine() );
+        _currentState = State.Playing;
+        StartCoroutine( LaunchCooldownRoutine() );
     }
 
 	private IEnumerator LaunchCooldownRoutine()
 	{
-		isLaunching = true;
-		yield return new WaitForSeconds(launchCooldown);
-		isLaunching = false;
+	    yield return new WaitForSeconds(launchCooldown);
+	    _currentState = State.Selecting;
 	}
 }
