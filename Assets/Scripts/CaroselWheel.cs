@@ -26,21 +26,14 @@ public class CaroselWheel : MonoBehaviour
 
     private bool input = false;
     private float currentTime;
-    private State _currentState;
-
-    float launchCooldown = 15f;
-
-    private enum State { Selecting, Playing }
 
 
     private void Start()
-    {   
-        _currentState = State.Selecting;
-
-    	//make sure settings are set to windowed 1080p (reboot exe to take effect)
-		PlayerPrefs.SetInt("Screenmanager Is Fullscreen mode", 0);
-		PlayerPrefs.SetInt("Screenmanager Resolution Width", 1920);
-		PlayerPrefs.SetInt("Screenmanager Resolution Height", 1080);
+    {
+        //make sure settings are set to windowed 1080p (reboot exe to take effect)
+        PlayerPrefs.SetInt("Screenmanager Is Fullscreen mode", 0);
+        PlayerPrefs.SetInt("Screenmanager Resolution Width", 1920);
+        PlayerPrefs.SetInt("Screenmanager Resolution Height", 1080);
         Screen.showCursor = false;
 
         DataLoader dl = new DataLoader();
@@ -53,10 +46,8 @@ public class CaroselWheel : MonoBehaviour
         {
             InstantiateGames(assets);
             SetUpGamesAtStart();
-            UpdateData();   
+            UpdateData();
         }
-
-
     }
 
     private void InstantiateGames(List<GameAsset> a)
@@ -96,9 +87,11 @@ public class CaroselWheel : MonoBehaviour
 
     private void Update()
     {
-    	//prevent null ref when no games are found
-		if(games == null)
-			return;
+        //prevent null ref when no games are found
+        if (games == null)
+        {
+            return;
+        }
 
         if (input)
         {
@@ -110,8 +103,6 @@ public class CaroselWheel : MonoBehaviour
             }
         }
 
-        if (_currentState == State.Selecting)
-        {
         if (currentPosition > 0 && GetKeyInputLeft()) // move to left game
         {
             ShiftTilesRight(currentPosition);
@@ -123,40 +114,37 @@ public class CaroselWheel : MonoBehaviour
             UpdateData();
         }
 
-            if (GetKeyInputButton1())
+        if (GetKeyInputButton1())
         {
-                input = true;
-                loading.text = "Loading";
-                Debug.Log("load");
+            input = true;
+            loading.text = "Loading";
             LaunchGame();
         }
-    }
-
     }
 
     private bool GetKeyInputLeft()
     {
         return Input.GetButtonDown("P1_Left")
-            || Input.GetButtonDown("P2_Left")
-            || Input.GetButtonDown("P3_Left")
-            || Input.GetButtonDown("P4_Left");
+               || Input.GetButtonDown("P2_Left")
+               || Input.GetButtonDown("P3_Left")
+               || Input.GetButtonDown("P4_Left");
     }
 
     private bool GetKeyInputRight()
     {
         return Input.GetButtonDown("P1_Right")
-            || Input.GetButtonDown("P2_Right")
-            || Input.GetButtonDown("P3_Right")
-            || Input.GetButtonDown("P4_Right");
+               || Input.GetButtonDown("P2_Right")
+               || Input.GetButtonDown("P3_Right")
+               || Input.GetButtonDown("P4_Right");
     }
 
     private bool GetKeyInputButton1()
     {
         // FIXME: temp fix to only allow player 1 to select games.
         return Input.GetButtonDown("P1_Button1");
-           // || Input.GetButtonDown("P2_Button1")
-           // || Input.GetButtonDown("P3_Button1")
-           // || Input.GetButtonDown("P4_Button1");
+        // || Input.GetButtonDown("P2_Button1")
+        // || Input.GetButtonDown("P3_Button1")
+        // || Input.GetButtonDown("P4_Button1");
     }
 
     private void ShiftTilesRight(int current)
@@ -166,23 +154,26 @@ public class CaroselWheel : MonoBehaviour
             if (currentPosition + 1 < games.Length)
             {
                 // shift right off screen
-                GoKitLite.instance.positionTo(games[currentPosition + 1].transform, .5f, rightOffScreen, 0, GoKitLiteEasing.Cubic.EaseInOut);
+                GoKitLite.instance.positionTo(games[currentPosition + 1].transform, .5f, rightOffScreen, 0,
+                    GoKitLiteEasing.Cubic.EaseInOut);
             }
 
             // shift center to right
-            GoKitLite.instance.positionTo(games[currentPosition].transform, .5f, rightScreen, 0, GoKitLiteEasing.Cubic.EaseInOut);
+            GoKitLite.instance.positionTo(games[currentPosition].transform, .5f, rightScreen, 0,
+                GoKitLiteEasing.Cubic.EaseInOut);
 
             // shift left to center
-            GoKitLite.instance.positionTo(games[currentPosition - 1].transform, .5f, centerScreen, 0, GoKitLiteEasing.Cubic.EaseInOut);
+            GoKitLite.instance.positionTo(games[currentPosition - 1].transform, .5f, centerScreen, 0,
+                GoKitLiteEasing.Cubic.EaseInOut);
 
             if (currentPosition - 2 >= 0)
             {
                 // shift off screen left to left
-                GoKitLite.instance.positionTo(games[currentPosition - 2].transform, .5f, leftScreen, 0, GoKitLiteEasing.Cubic.EaseInOut);
+                GoKitLite.instance.positionTo(games[currentPosition - 2].transform, .5f, leftScreen, 0,
+                    GoKitLiteEasing.Cubic.EaseInOut);
             }
             currentPosition--;
         }
-        
     }
 
     private void ShiftTilesLeft(int current)
@@ -192,18 +183,22 @@ public class CaroselWheel : MonoBehaviour
             if (currentPosition - 1 >= 0)
             {
                 // shift left off screen
-                GoKitLite.instance.positionTo(games[currentPosition - 1].transform, .5f, leftOffScreen, 0, GoKitLiteEasing.Cubic.EaseInOut);
+                GoKitLite.instance.positionTo(games[currentPosition - 1].transform, .5f, leftOffScreen, 0,
+                    GoKitLiteEasing.Cubic.EaseInOut);
             }
             // shift center to left
-            GoKitLite.instance.positionTo(games[currentPosition].transform, .5f, leftScreen, 0, GoKitLiteEasing.Cubic.EaseInOut);
+            GoKitLite.instance.positionTo(games[currentPosition].transform, .5f, leftScreen, 0,
+                GoKitLiteEasing.Cubic.EaseInOut);
 
             // shift right to center
-            GoKitLite.instance.positionTo(games[currentPosition + 1].transform, .5f, centerScreen, 0, GoKitLiteEasing.Cubic.EaseInOut);
+            GoKitLite.instance.positionTo(games[currentPosition + 1].transform, .5f, centerScreen, 0,
+                GoKitLiteEasing.Cubic.EaseInOut);
 
             if (currentPosition + 2 < games.Length)
             {
                 // shift right off screen to right
-                GoKitLite.instance.positionTo(games[currentPosition + 2].transform, .5f, rightScreen, 0, GoKitLiteEasing.Cubic.EaseInOut);
+                GoKitLite.instance.positionTo(games[currentPosition + 2].transform, .5f, rightScreen, 0,
+                    GoKitLiteEasing.Cubic.EaseInOut);
             }
             currentPosition++;
         }
@@ -224,22 +219,19 @@ public class CaroselWheel : MonoBehaviour
         }
     }
 
-
-	
-
     private void LaunchGame()
     {
         if (!waiting)
         {
             waiting = true;
             StartCoroutine("Wait");
-            GameObject.FindGameObjectWithTag("Runner").GetComponent<Runner>().Run(gameAssets[currentPosition].ExecutablePath);
-        _currentState = State.Playing;
-        StartCoroutine( LaunchCooldownRoutine() );
+            GameObject.FindGameObjectWithTag("Runner")
+                .GetComponent<Runner>()
+                .Run(gameAssets[currentPosition].ExecutablePath);
         }
     }
 
-    IEnumerator Wait()
+    private IEnumerator Wait()
     {
         yield return new WaitForSeconds(5f);
         waiting = false;
