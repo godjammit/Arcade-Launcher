@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Prime31.GoKitLite;
@@ -20,7 +21,8 @@ public class CaroselWheel : MonoBehaviour
     public GameObject gamePrefab;
     private GameObject[] games;
     private GameAsset[] gameAssets;
-    private int currentPosition = 0;
+    private int currentPosition;
+    private bool waiting;
 
     private void Start()
     {   
@@ -170,12 +172,29 @@ public class CaroselWheel : MonoBehaviour
         Game data = gameAssets[currentPosition].GameData;
         title.text = data.Title;
         author.text = data.Author;
-        players.text = data.Players + ((data.Players == 1) ? " Player" : " Players");
+        if (data.PlayersMin == data.PlayersMax)
+        {
+            players.text = data.PlayersMin + ((data.PlayersMax == 1) ? " Player" : " Players");
+        }
+        else if (data.PlayersMin < data.PlayersMax)
+        {
+            players.text = data.PlayersMin + " to " + data.PlayersMax + " Players";
+        }
     }
 
     private void LaunchGame()
     {
-        Debug.Log(gameAssets[currentPosition].ExecutablePath);
-        System.Diagnostics.Process.Start(gameAssets[currentPosition].ExecutablePath);
+        if (!waiting)
+        {
+            waiting = true;
+            StartCoroutine("Wait");
+            GameObject.FindGameObjectWithTag("Runner").GetComponent<Runner>().Run(gameAssets[currentPosition].ExecutablePath);
+        }
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(5f);
+        waiting = false;
     }
 }
