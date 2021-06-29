@@ -1,0 +1,6 @@
+{
+    "title": "Game 2",
+    "author": "Tyler T",
+    "players": 2,
+    "executable":"game2.exe"
+}

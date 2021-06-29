@@ -9,51 +9,63 @@ using UnityEngine.Networking;
 
 public class DataLoader
 {
-    private List<GameAsset> gameAssetsList;
+	private List<GameAsset> gameAssetsList;
 
-    public DataLoader()
-    {
-        GetAssets();
-    }
+	public DataLoader()
+	{
+		GetAssets();
+	}
 
-    private void GetAssets()
-    {
-        gameAssetsList = new List<GameAsset>();
+	private void GetAssets()
+	{
+		gameAssetsList = new List<GameAsset>();
 
-        string[] allDirs = Directory.GetDirectories(Environment.CurrentDirectory);
-        foreach (string s in allDirs)
-        {
-            string[] info = Directory.GetFiles(s, "info.txt");
-            if (info.Any())
-            {
-                Debug.Log("got info");
-                GameAsset asset = new GameAsset();
+		string dir = Environment.CurrentDirectory;
+		GetAssets(dir);
+	}
 
-                // get Game
-                string text = File.ReadAllText(info[0]);
-                Game game = JsonConvert.DeserializeObject<Game>(text);
-                asset.GameData = game;
+	void GetAssets(string path)
+	{
+		string[] allDirs = Directory.GetDirectories(path);
+		foreach (string s in allDirs)
+		{
+			if (s.ToLowerInvariant().EndsWith("games"))
+			{
+				GetAssets(Path.Combine(path, s));
+				continue;
+			}
 
-                // get Texture
-                string[] textures = Directory.GetFiles(s, "card.png");
-                if (textures.Any())
-                {
-                    WWW www = new WWW("file://" + textures[0]);
-                    asset.Card = www.texture;
-                    Debug.Log("got texture");
-                }
+			string[] info = Directory.GetFiles(s, "info.txt");
+			if (info.Any())
+			{
+				Debug.Log("got info");
+				GameAsset asset = new GameAsset();
 
-                // get executable path
-                asset.ExecutablePath = s + "/" + asset.GameData.Executable;
-                Debug.Log("got executable " + asset.ExecutablePath);
-                
-                gameAssetsList.Add(asset);
-            }
-        }
-    }
+				// get Game
+				string text = File.ReadAllText(info[0]);
+				Game game = JsonConvert.DeserializeObject<Game>(text);
+				asset.GameData = game;
 
-    public List<GameAsset> GetGameAssetsList()
-    {
-        return gameAssetsList;
-    }
+				// get Texture
+				string[] textures = Directory.GetFiles(s, "card.png");
+				if (textures.Any())
+				{
+					WWW www = new WWW("file://" + textures[0]);
+					asset.Card = www.texture;
+					Debug.Log("got texture");
+				}
+
+				// get executable path
+				asset.ExecutablePath = s + "/" + asset.GameData.Executable;
+				Debug.Log("got executable " + asset.ExecutablePath);
+
+				gameAssetsList.Add(asset);
+			}
+		}
+	}
+
+	public List<GameAsset> GetGameAssetsList()
+	{
+		return gameAssetsList;
+	}
 }
