@@ -176,6 +176,7 @@ MonoBehaviour:
   author: {fileID: 1173770124}
   players: {fileID: 772372436}
   gamePrefab: {fileID: 100000, guid: 2c9ca7f1962c5a14d94e3b146d1166a9, type: 3}
+  Runner: {fileID: 907348151}
 --- !u!1 &558001170
 GameObject:
   m_ObjectHideFlags: 0

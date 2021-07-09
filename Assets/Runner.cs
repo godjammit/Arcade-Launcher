@@ -7,8 +7,10 @@ public class Runner : MonoBehaviour {
 
     public void Run(String path)
     {
+        UnityEngine.Debug.Log($"Running Game: {path}");
+
         Process myProcess = new Process();
-        myProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+        myProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
         myProcess.StartInfo.CreateNoWindow = true;
         myProcess.StartInfo.UseShellExecute = false;
         myProcess.StartInfo.FileName = path;

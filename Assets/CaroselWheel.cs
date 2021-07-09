@@ -21,6 +21,8 @@ public class CaroselWheel : MonoBehaviour
     private GameAsset[] gameAssets;
     private int currentPosition = 0;
 
+    public Runner Runner;
+
     private void Start()
     {   
         Go.defaultEaseType = GoEaseType.CubicInOut;
@@ -183,7 +185,6 @@ public class CaroselWheel : MonoBehaviour
 
     private void LaunchGame()
     {
-        Debug.Log(gameAssets[currentPosition].ExecutablePath);
-        System.Diagnostics.Process.Start(gameAssets[currentPosition].ExecutablePath);
+        this.Runner.Run(gameAssets[currentPosition].ExecutablePath);
     }
 }
