@@ -2,5 +2,5 @@
     "title": "Game 1",
     "author": "Author Test Field Longer Name",
     "players": 4,
-    "executable":"game1.exe"
+    "executable":"EmptyProject.exe"
 }

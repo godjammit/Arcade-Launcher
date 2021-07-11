@@ -4,187 +4,178 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using System.Collections;
+using System.Collections;
+using System.Collections.Generic;
+
 
 public class CaroselWheel : MonoBehaviour
 {
-    public float speed;
-    public Vector3 leftOffScreen;
-    public Vector3 leftScreen;
-    public Vector3 centerScreen;
-    public Vector3 rightScreen;
-    public Vector3 rightOffScreen;
+	public float speed;
+	public float gameSpacing;
 
-    public TextMesh title, author, players;
+	public float _indexSmoothed;
 
-    public GameObject gamePrefab;
-    private GameObject[] games;
-    private GameAsset[] gameAssets;
-    private int currentPosition = 0;
+	public TextMesh title, author, players;
 
-    public Runner Runner;
+	public GameObject gamePrefab;
+	public GameObject gameContainer;
+	private GameThumb[] games;
+	private GameAsset[] gameAssets;
+	private int currentPosition = 0;
+	private int currentPositionTarget = 0;
+	private float currentPositionFloat = 0f;
+	private float currentPositionVel = 0f;
 
-    private void Start()
-    {   
-        Go.defaultEaseType = GoEaseType.CubicInOut;
-        DataLoader dl = new DataLoader();
-        List<GameAsset> assets = dl.GetGameAssetsList();
-        if (!assets.Any())
-        {
-            title.text = "No Games Found";
-        }
-        else
-        {
-            InstantiateGames(assets);
-            SetUpGamesAtStart();
-            UpdateData();   
-        }
-    }
+	public int AmountToSpawn = 10;
 
-    private void InstantiateGames(List<GameAsset> a)
-    {
-        games = new GameObject[a.Count];
-        gameAssets = new GameAsset[a.Count];
+	public Runner Runner;
 
-        int i = 0;
-        foreach (GameAsset ga in a)
-        {
-            GameObject g = (GameObject) Instantiate(gamePrefab);
-            games[i] = g;
-            gameAssets[i] = ga;
-            g.GetComponent<Renderer>().material.mainTexture = ga.Card;
-            i++;
-        }
-    }
+	[Range(0f, 10f)]
+	public float AngularFrequency = 2f;
+	[Range(0f, 1f)]
+	public float Dampen = 0.2f;
+	public float Speed = 5f;
 
-    private void SetUpGamesAtStart()
-    {
-        for (int i = 0; i < games.Length; i++)
-        {
-            if (i == 0)
-            {
-                games[0].transform.position = centerScreen;
-            }
-            else if (i == 1)
-            {
-                games[1].transform.position = rightScreen;
-            }
-            else
-            {
-                games[i].transform.position = rightOffScreen;
-            }
-        }
-    }
+	public float Spacing = 1f;
 
-    private void Update()
-    {
-        if (currentPosition > 0 && GetKeyInputLeft()) // move to left game
-        {
-            ShiftTilesRight(currentPosition);
-            UpdateData();
-        }
-        else if (currentPosition < games.Length - 1 && GetKeyInputRight()) // move to right game
-        {
-            ShiftTilesLeft(currentPosition);
-            UpdateData();
-        }
-        else if (GetKeyInputButton1())
-        {
-            LaunchGame();
-        }
-    }
+	private void Start()
+	{
+		DataLoader dl = new DataLoader();
+		List<GameAsset> assets = dl.GetGameAssetsList();
+		if (!assets.Any())
+		{
+			title.text = "No Games Found";
+		}
+		else
+		{
+			InstantiateGames(assets);
+			UpdateSelectionFields();
+		}
+	}
 
-    private bool GetKeyInputLeft()
-    {
-        return Input.GetButtonDown("P1_Left")
-            || Input.GetButtonDown("P2_Left")
-            || Input.GetButtonDown("P3_Left")
-            || Input.GetButtonDown("P4_Left");
-    }
+	private void InstantiateGames(List<GameAsset> a)
+	{
+		gameAssets = new GameAsset[a.Count];
+		for (int i = 0; i < a.Count; i++)
+		{
+			gameAssets[i] = a[i];
+		}
 
-    private bool GetKeyInputRight()
-    {
-        return Input.GetButtonDown("P1_Right")
-            || Input.GetButtonDown("P2_Right")
-            || Input.GetButtonDown("P3_Right")
-            || Input.GetButtonDown("P4_Right");
-    }
+		games = new GameThumb[AmountToSpawn];
+		for (int i = 0; i < AmountToSpawn; i++)
+		{
+			GameObject g = (GameObject) Instantiate(gamePrefab);
+			games[i] = g.GetComponent<GameThumb>();
+			g.transform.SetParent(gameContainer.transform);
+		}
+	}
 
-    private bool GetKeyInputButton1()
-    {
-        return Input.GetButtonDown("P1_Button1")
-            || Input.GetButtonDown("P2_Button1")
-            || Input.GetButtonDown("P3_Button1")
-            || Input.GetButtonDown("P4_Button1");
-    }
+	private void PositionGames()
+	{
+		int midpoint = AmountToSpawn / 2;
+		int min = currentPosition - midpoint;
+		for (int i = 0; i < AmountToSpawn; i++)
+		{
+			int pos = min + i;
+			int gamesIndex = mod(pos, gameAssets.Length);
 
-    private void ShiftTilesRight(int current)
-    {
-        if (currentPosition - 1 >= 0)
-        {
-            if (currentPosition + 1 < games.Length)
-            {
-                // shift right off screen
-                //Go.to(games[currentPosition + 1].transform, rightOffScreen, GoEasing.Cubic.EaseInOut);
-                games[currentPosition + 1].transform.positionTo(0.5f, rightOffScreen);
-            }
+			games[i].Conf(gameAssets[gamesIndex]);
+			games[i].transform.localPosition = new Vector3(0f, -pos * Spacing, 0f);
+		}
+	}
 
-            // shift center to right
-            //Go.instance.positionTo(games[currentPosition].transform, .5f, rightScreen, 0, GoEasing.Cubic.EaseInOut);
-            games[currentPosition].transform.positionTo(0.5f, rightScreen);
+	private void Update()
+	{
+		if (GetKeyInputDown()) // move to left game
+		{
+			ShiftTilesForward();
+		}
+		else if (GetKeyInputUp()) // move to right game
+		{
+			ShiftTilesBack();
+		}
+		else if (GetKeyInputButton1())
+		{
+			LaunchGame();
+		}
 
-            // shift left to center
-            //Go.instance.positionTo(games[currentPosition - 1].transform, .5f, centerScreen, 0, GoEasing.Cubic.EaseInOut);
-            games[currentPosition - 1].transform.positionTo(0.5f, centerScreen);
+		currentPositionFloat = NumericSpringing.Spring_Float(currentPositionFloat, ref currentPositionVel, (float)currentPositionTarget, Dampen, AngularFrequency, Time.deltaTime * Speed);
+		currentPosition = Mathf.RoundToInt(currentPositionFloat);
 
-            if (currentPosition - 2 >= 0)
-            {
-                // shift off screen left to left
-                //Go.instance.positionTo(games[currentPosition - 2].transform, .5f, leftScreen, 0, GoEasing.Cubic.EaseInOut);
-                games[currentPosition - 2].transform.positionTo(0.5f, leftScreen);
-            }
-            currentPosition--;
-        }
-        
-    }
+		gameContainer.transform.localPosition = new Vector3(0f, currentPositionFloat * Spacing, 0f);
 
-    private void ShiftTilesLeft(int current)
-    {
-        if (currentPosition + 1 < games.Length)
-        {       
-            if (currentPosition - 1 >= 0)
-            {
-                // shift left off screen
-                //Go.instance.positionTo(games[currentPosition - 1].transform, .5f, leftOffScreen, 0, GoEasing.Cubic.EaseInOut);
-                games[currentPosition - 1].transform.positionTo(0.5f, leftOffScreen);
-            }
-            // shift center to left
-            //Go.instance.positionTo(games[currentPosition].transform, .5f, leftScreen, 0, GoEasing.Cubic.EaseInOut);
-            games[currentPosition].transform.positionTo(0.5f, leftScreen);
+		UpdateSelectionFields();
+		PositionGames();
+	}
 
-            // shift right to center
-            //Go.instance.positionTo(games[currentPosition + 1].transform, .5f, centerScreen, 0, GoEasing.Cubic.EaseInOut);
-            games[currentPosition + 1].transform.positionTo(0.5f, centerScreen);
+	private bool GetKeyInputLeft()
+	{
+		return Input.GetButtonDown("P1_Left")
+			|| Input.GetButtonDown("P2_Left")
+			|| Input.GetButtonDown("P3_Left")
+			|| Input.GetButtonDown("P4_Left");
+	}
 
-            if (currentPosition + 2 < games.Length)
-            {
-                // shift right off screen to right
-                //Go.instance.positionTo(games[currentPosition + 2].transform, .5f, rightScreen, 0, GoEasing.Cubic.EaseInOut);
-                games[currentPosition + 2].transform.positionTo(0.5f, rightScreen);
-            }
-            currentPosition++;
-        }
-    }
+	private bool GetKeyInputRight()
+	{
+		return Input.GetButtonDown("P1_Right")
+			|| Input.GetButtonDown("P2_Right")
+			|| Input.GetButtonDown("P3_Right")
+			|| Input.GetButtonDown("P4_Right");
+	}
 
-    private void UpdateData()
-    {
-        Game data = gameAssets[currentPosition].GameData;
-        title.text = data.Title;
-        author.text = data.Author;
-        players.text = data.Players + ((data.Players == 1) ? " Player" : " Players");
-    }
+	private bool GetKeyInputUp()
+	{
+		return Input.GetButtonDown("P1_Up")
+			|| Input.GetButtonDown("P2_Up")
+			|| Input.GetButtonDown("P3_Up")
+			|| Input.GetButtonDown("P4_Up");
+	}
 
-    private void LaunchGame()
-    {
-        this.Runner.Run(gameAssets[currentPosition].ExecutablePath);
-    }
+	private bool GetKeyInputDown()
+	{
+		return Input.GetButtonDown("P1_Down")
+			|| Input.GetButtonDown("P2_Down")
+			|| Input.GetButtonDown("P3_Down")
+			|| Input.GetButtonDown("P4_Down");
+	}
+
+	private bool GetKeyInputButton1()
+	{
+		return Input.GetButtonDown("P1_Button1")
+			|| Input.GetButtonDown("P2_Button1")
+			|| Input.GetButtonDown("P3_Button1")
+			|| Input.GetButtonDown("P4_Button1");
+	}
+
+	private void ShiftTilesForward()
+	{
+		currentPositionTarget++;
+	}
+
+	private void ShiftTilesBack()
+	{
+		currentPositionTarget--;
+	}
+
+	private void UpdateSelectionFields()
+	{
+		int index = mod(currentPosition, gameAssets.Length);
+		Game data = gameAssets[index].GameData;
+		title.text = data.Title;
+		author.text = data.Author;
+		players.text = data.Players + ((data.Players == 1) ? " Player" : " Players");
+	}
+
+	int mod(int k, int n)
+	{
+		return ((k %= n) < 0) ? k + n : k;
+	}
+
+
+	private void LaunchGame()
+	{
+		int index = mod(currentPositionTarget, gameAssets.Length);
+		this.Runner.Run(gameAssets[index].ExecutablePath);
+	}
 }
