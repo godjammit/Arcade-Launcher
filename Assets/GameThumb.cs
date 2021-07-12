@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class GameThumb : MonoBehaviour
 {
-	public RawImage Renderer;
+	public Renderer Renderer;
 	public TMPro.TMP_Text Title;
 	public TMPro.TMP_Text Players;
 	public Animator Animator;
@@ -24,12 +24,19 @@ public class GameThumb : MonoBehaviour
 
 	public void Conf(GameAsset asset)
 	{
-		Renderer.texture = asset.Card;
-		Title.text = asset.GameData.Title;
-		if (asset.GameData.Players > 1)
-			Players.text = $"{asset.GameData.Players} Players";
-		else
-			Players.text = $"{asset.GameData.Players} Player";
+		if (Renderer)
+			Renderer.material.mainTexture = asset.Card;
+
+		if (Title)
+			Title.text = asset.GameData.Title;
+
+		if (Players)
+		{
+			if (asset.GameData.Players > 1)
+				Players.text = $"{asset.GameData.Players} Players";
+			else
+				Players.text = $"{asset.GameData.Players} Player";
+		}
 	}
 
 	public void SetSelection(bool val)

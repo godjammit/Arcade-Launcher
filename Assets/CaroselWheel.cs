@@ -41,6 +41,7 @@ public class CaroselWheel : MonoBehaviour
 	public Transform FlipOutPosition;
 	public float FlipOutDuration = 0.5f;
 	float animationTimer01;
+	public AnimationCurve FlipOutCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
 	private void Start()
 	{
@@ -80,27 +81,32 @@ public class CaroselWheel : MonoBehaviour
 	{
 		int midpoint = AmountToSpawn / 2;
 		int min = currentPosition - midpoint;
+		int max = min + AmountToSpawn;
+		int startPoint = (AmountToSpawn * (min/AmountToSpawn));
 
 		Vector3 mountPoint = this.FlipOutPosition.position;
 
 		for (int i = 0; i < AmountToSpawn; i++)
 		{
-			RectTransform rt = games[i].GetComponent<RectTransform>();
-			int pos = min + i;
+			Transform gameTransform = games[i].transform;
+			int pos = startPoint + i;
+			if (pos > max)
+				pos -= AmountToSpawn;
 			int gamesIndex = mod(pos, gameAssets.Length);
 
 			games[i].Conf(gameAssets[gamesIndex]);
 			var y = -pos * Spacing;
 			float distance01 = Mathf.Clamp01( Mathf.Abs((float)pos - currentPositionFloat) / SelectionFalloff);
 			games[i].transform.localScale = Vector3.Lerp(defaultScale * SelectionScaleMultiplier, defaultScale, distance01);
-			bool isSelection = min + i == currentPositionTarget;
+			bool isSelection = gamesIndex == currentPositionTarget;
 			if (isSelection)
 			{
-				rt.position = Vector3.Lerp(rt.localToWorldMatrix * new Vector2(0f, y), mountPoint, animationTimer01);
+				float time01 = FlipOutCurve.Evaluate(animationTimer01);
+				gameTransform.position = Vector3.LerpUnclamped(gameContainer.transform.TransformPoint(new Vector3(0f, y, 0f)), mountPoint, time01);
 			}
 			else
 			{
-				rt.anchoredPosition = new Vector2(0f, y);
+				gameTransform.localPosition = new Vector3(0f, y, 0f);
 			}
 			games[i].SetSelection(isSelection);
 		}
