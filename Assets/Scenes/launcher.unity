@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.2
-  gameSpacing: 0
+  gameSpacing: 180
   _indexSmoothed: 0
   title: {fileID: 1410231522}
   author: {fileID: 1173770124}
@@ -276,6 +276,9 @@ MonoBehaviour:
   Speed: 1
   Spacing: 180
   SelectionScaleMultiplier: 1.2
+  SelectionFalloff: 3
+  FlipOutPosition: {fileID: 588317655}
+  FlipOutDuration: 0.5
 --- !u!1 &548647386
 GameObject:
   m_ObjectHideFlags: 0
@@ -5120,6 +5123,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &588317654
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 588317655}
+  m_Layer: 0
+  m_Name: Center
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &588317655
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588317654}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &658501647
 GameObject:

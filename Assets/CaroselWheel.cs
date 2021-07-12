@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using System.Collections;
-using System.Collections;
-using System.Collections.Generic;
 
 
 public class CaroselWheel : MonoBehaviour
@@ -39,7 +34,13 @@ public class CaroselWheel : MonoBehaviour
 	public float Spacing = 1f;
 
 	public float SelectionScaleMultiplier = 1.2f;
+	[Range(0f, 10f)]
+	public float SelectionFalloff = 3f;
 	private Vector3 defaultScale;
+
+	public Transform FlipOutPosition;
+	public float FlipOutDuration = 0.5f;
+	float animationTimer01;
 
 	private void Start()
 	{
@@ -80,6 +81,8 @@ public class CaroselWheel : MonoBehaviour
 		int midpoint = AmountToSpawn / 2;
 		int min = currentPosition - midpoint;
 
+		Vector3 mountPoint = this.FlipOutPosition.position;
+
 		for (int i = 0; i < AmountToSpawn; i++)
 		{
 			RectTransform rt = games[i].GetComponent<RectTransform>();
@@ -88,10 +91,18 @@ public class CaroselWheel : MonoBehaviour
 
 			games[i].Conf(gameAssets[gamesIndex]);
 			var y = -pos * Spacing;
-			rt.anchoredPosition = new Vector2(0f, y);
-			float distance01 = Mathf.Clamp01( Mathf.Abs((float)pos - currentPositionFloat) / 1.2f);
+			float distance01 = Mathf.Clamp01( Mathf.Abs((float)pos - currentPositionFloat) / SelectionFalloff);
 			games[i].transform.localScale = Vector3.Lerp(defaultScale * SelectionScaleMultiplier, defaultScale, distance01);
-			games[i].SetSelection(min + i == currentPositionTarget);
+			bool isSelection = min + i == currentPositionTarget;
+			if (isSelection)
+			{
+				rt.position = Vector3.Lerp(rt.localToWorldMatrix * new Vector2(0f, y), mountPoint, animationTimer01);
+			}
+			else
+			{
+				rt.anchoredPosition = new Vector2(0f, y);
+			}
+			games[i].SetSelection(isSelection);
 		}
 	}
 
@@ -114,6 +125,9 @@ public class CaroselWheel : MonoBehaviour
 		currentPosition = Mathf.RoundToInt(currentPositionFloat);
 
 		gameContainer.transform.localPosition = new Vector3(0f, currentPositionFloat * Spacing, 0f);
+
+		animationTimer01 += Time.deltaTime / FlipOutDuration;
+		animationTimer01 = Mathf.Clamp01(animationTimer01);
 
 		UpdateSelectionFields();
 		PositionGames();
@@ -162,11 +176,13 @@ public class CaroselWheel : MonoBehaviour
 	private void ShiftTilesForward()
 	{
 		currentPositionTarget++;
+		animationTimer01 = 0f;
 	}
 
 	private void ShiftTilesBack()
 	{
 		currentPositionTarget--;
+		animationTimer01 = 0f;
 	}
 
 	private void UpdateSelectionFields()
