@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MainTerrain
+  m_Shader: {fileID: -6465566751694194690, guid: f87d8eeb855e7ef4c8216209ff104816,
+    type: 3}
+  m_ShaderKeywords: HASFOG_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_909895EA:
+        m_Texture: {fileID: 2800000, guid: b64da4439b44e404692937c57fa4b799, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_62B77390_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 0d79595d4f9fa9c49ba113de09c242b1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_AED7A3D9_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 259839ff87bff374bbfc5e81daa1a398, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_B66A0E71_Texture_1:
+        m_Texture: {fileID: 2800000, guid: b64da4439b44e404692937c57fa4b799, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - HASFOG: 1
+    - Vector1_12393F03: 0.00153
+    - Vector1_4197D33E: 0.00138
+    - Vector1_530CA01: 0.01
+    - Vector1_5C87C963: -1.31
+    - Vector1_65F12976: 0.543
+    - Vector1_8B73EF8B: 4.14
+    - Vector1_9A6BF62D: 0.69
+    - Vector1_9F3B1331: 0.08
+    - Vector1_A344D3C3: 0.91
+    - Vector1_B708656E: 0.231
+    - Vector1_D57843FF: 12.9
+    - Vector1_E3483EDB: 1
+    - Vector1_E60D503: 1.58
+    - Vector1_E8CEBEE9: 0.225
+    - Vector1_F9AC0706: 1
+    m_Colors:
+    - Color_72BCA06: {r: 0.496, g: 0.39378005, b: 0.196912, a: 1}
+    - Vector2_279C61B: {r: -5, g: 134.33, b: 0, a: 0}
+    - _baseColor: {r: 0.18039212, g: 0.2980392, b: 0.34509802, a: 1}
+    - _softNoiseColor: {r: 0.17687994, g: 0.36482283, b: 0.43999994, a: 1}
+    - _squiggleNoiseColor: {r: 0.5719116, g: 0.74428195, b: 0.7924528, a: 1}
