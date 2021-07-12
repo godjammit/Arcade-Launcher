@@ -38,8 +38,13 @@ public class CaroselWheel : MonoBehaviour
 
 	public float Spacing = 1f;
 
+	public float SelectionScaleMultiplier = 1.2f;
+	private Vector3 defaultScale;
+
 	private void Start()
 	{
+		defaultScale = gamePrefab.transform.localScale;
+
 		DataLoader dl = new DataLoader();
 		List<GameAsset> assets = dl.GetGameAssetsList();
 		if (!assets.Any())
@@ -74,13 +79,19 @@ public class CaroselWheel : MonoBehaviour
 	{
 		int midpoint = AmountToSpawn / 2;
 		int min = currentPosition - midpoint;
+
 		for (int i = 0; i < AmountToSpawn; i++)
 		{
+			RectTransform rt = games[i].GetComponent<RectTransform>();
 			int pos = min + i;
 			int gamesIndex = mod(pos, gameAssets.Length);
 
 			games[i].Conf(gameAssets[gamesIndex]);
-			games[i].transform.localPosition = new Vector3(0f, -pos * Spacing, 0f);
+			var y = -pos * Spacing;
+			rt.anchoredPosition = new Vector2(0f, y);
+			float distance01 = Mathf.Clamp01( Mathf.Abs((float)pos - currentPositionFloat) / 1.2f);
+			games[i].transform.localScale = Vector3.Lerp(defaultScale * SelectionScaleMultiplier, defaultScale, distance01);
+			games[i].SetSelection(min + i == currentPositionTarget);
 		}
 	}
 
