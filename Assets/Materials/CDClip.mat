@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CDClip
+  m_Shader: {fileID: -6465566751694194690, guid: d8901cedfe2c8b6429a26fdcb7494afd, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_bd700a6cc78044e389e58b3c2dc0c134:
+        m_Texture: {fileID: 2800000, guid: 33679657c358ff943a7d2f0d09ac1b1c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_f0eaa4356fcc4c4394a526a13f783336:
+        m_Texture: {fileID: 2800000, guid: cb52b569391df9f4ca397181117f5aee, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_f72d65eb181d4db28e0db6aef995fa05:
+        m_Texture: {fileID: 2800000, guid: cb52b569391df9f4ca397181117f5aee, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_24051265da4c4907996bc4e27daee72b: 0
+    - Vector1_6d35cd9d67e64d7ba047b64938578fab: 0.06
+    - Vector1_99f42861d1ad44dabf9b4080babf13b6: 0.66
+    m_Colors:
+    - Color_1480108c7bbf4906bd908f8d8d14a0f6: {r: 0.58431375, g: 0.58431375, b: 0.58431375, a: 0}
+    - Color_f371c6bc5b32401992b08aaffe8dc2e9: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_5b55dab2dc4b480fbb1977117d63034d: {r: 1, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []
