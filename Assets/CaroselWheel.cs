@@ -40,7 +40,7 @@ public class CaroselWheel : MonoBehaviour
 
 	public Transform FlipOutPosition;
 	public float FlipOutDuration = 0.5f;
-	float animationTimer01;
+	public float FlipBackDuration = 0.1f;
 	public AnimationCurve FlipOutCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
 	private void Start()
@@ -82,7 +82,7 @@ public class CaroselWheel : MonoBehaviour
 		int midpoint = AmountToSpawn / 2;
 		int min = currentPosition - midpoint;
 		int max = min + AmountToSpawn;
-		int startPoint = (AmountToSpawn * (min/AmountToSpawn));
+		int startPoint = (AmountToSpawn * Mathf.CeilToInt(((float)min/(float)AmountToSpawn)));
 
 		Vector3 mountPoint = this.FlipOutPosition.position;
 
@@ -98,16 +98,30 @@ public class CaroselWheel : MonoBehaviour
 			var y = -pos * Spacing;
 			float distance01 = Mathf.Clamp01( Mathf.Abs((float)pos - currentPositionFloat) / SelectionFalloff);
 			games[i].transform.localScale = Vector3.Lerp(defaultScale * SelectionScaleMultiplier, defaultScale, distance01);
-			bool isSelection = gamesIndex == currentPositionTarget;
+
+			bool isSelection = pos == currentPositionTarget;
+
 			if (isSelection)
 			{
-				float time01 = FlipOutCurve.Evaluate(animationTimer01);
-				gameTransform.position = Vector3.LerpUnclamped(gameContainer.transform.TransformPoint(new Vector3(0f, y, 0f)), mountPoint, time01);
+				games[i].animationT = Mathf.MoveTowards(games[i].animationT, 1f, Time.deltaTime / FlipOutDuration);
 			}
 			else
 			{
-				gameTransform.localPosition = new Vector3(0f, y, 0f);
+				games[i].animationT = Mathf.MoveTowards(games[i].animationT, 0f, Time.deltaTime / FlipBackDuration);
 			}
+
+			games[i].animationT = Mathf.Clamp01(games[i].animationT);
+
+			float time01 = FlipOutCurve.Evaluate(games[i].animationT);
+
+			//float wave = Mathf.Lerp(-10f, 10f, Mathf.PerlinNoise(y, y * 1.32f));
+			float rand = Mathf.Lerp(-12f, 12f, Mathf.PerlinNoise(pos * 1.245f, y * 2.12f));
+			float randZ = Mathf.Lerp(-.2f, .2f, Mathf.PerlinNoise(pos * 3.123f, y * 2.1123f));
+			float randX = Mathf.Lerp(-.1f, .1f, Mathf.PerlinNoise(pos * 1.123f, .2f));
+
+			gameTransform.position = Vector3.LerpUnclamped(gameContainer.transform.TransformPoint(new Vector3(randX, y, randZ)), mountPoint, time01);
+			gameTransform.rotation = Quaternion.Euler(0f, rand, 0f);
+
 			games[i].SetSelection(isSelection);
 		}
 	}
@@ -131,9 +145,6 @@ public class CaroselWheel : MonoBehaviour
 		currentPosition = Mathf.RoundToInt(currentPositionFloat);
 
 		gameContainer.transform.localPosition = new Vector3(0f, currentPositionFloat * Spacing, 0f);
-
-		animationTimer01 += Time.deltaTime / FlipOutDuration;
-		animationTimer01 = Mathf.Clamp01(animationTimer01);
 
 		UpdateSelectionFields();
 		PositionGames();
@@ -182,13 +193,11 @@ public class CaroselWheel : MonoBehaviour
 	private void ShiftTilesForward()
 	{
 		currentPositionTarget++;
-		animationTimer01 = 0f;
 	}
 
 	private void ShiftTilesBack()
 	{
 		currentPositionTarget--;
-		animationTimer01 = 0f;
 	}
 
 	private void UpdateSelectionFields()

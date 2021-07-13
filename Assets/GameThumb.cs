@@ -12,6 +12,17 @@ public class GameThumb : MonoBehaviour
 	static int deselectedHash;
 
 	bool selectionState;
+	public float animationT;
+
+	public float TransitionDurationForOpen = 0.2f;
+	public float TransitionDurationForClose = 0.2f;
+
+	public Transform DiscTransform;
+	Vector3 discCachedPos;
+	[Range(0.01f, 5f)]
+	public float DiscSpeed = 0.5f;
+	[Range(0.0001f, 1f)]
+	public float MaxDiscDistance = 0.1f;
 
 	private void Awake()
 	{
@@ -19,6 +30,26 @@ public class GameThumb : MonoBehaviour
 		{
 			selectedHash = Animator.StringToHash("Selected");
 			deselectedHash = Animator.StringToHash("Deselected");
+		}
+	}
+
+	private void LateUpdate()
+	{
+		if (selectionState)
+		{
+			Vector3 target = DiscTransform.position;
+			DiscTransform.position = Vector3.Lerp(
+				discCachedPos,
+				target, 
+				Time.deltaTime * DiscSpeed);
+			Vector3 pos = DiscTransform.position;
+			if (MaxDiscDistance * MaxDiscDistance < Vector3.SqrMagnitude(target - pos))
+				DiscTransform.position = Vector3.ClampMagnitude(pos - target, MaxDiscDistance) + target;
+			discCachedPos = DiscTransform.position;
+		}
+		else
+		{
+			discCachedPos = DiscTransform.position;
 		}
 	}
 
@@ -42,9 +73,9 @@ public class GameThumb : MonoBehaviour
 	public void SetSelection(bool val)
 	{
 		if (val && selectionState == false)
-			Animator.CrossFade(selectedHash, 0.1f, 0);
+			Animator.CrossFade(selectedHash, TransitionDurationForOpen, 0);
 		else if (val == false && selectionState == true)
-			Animator.CrossFade(deselectedHash, 0.1f, 0);
+			Animator.CrossFade(deselectedHash, TransitionDurationForClose, 0);
 
 		selectionState = val;
 	}

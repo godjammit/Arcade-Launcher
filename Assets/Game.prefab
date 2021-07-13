@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children:
   - {fileID: 5555019832980469894}
   m_Father: {fileID: 0}
@@ -49,6 +49,12 @@ MonoBehaviour:
   Title: {fileID: 1296478669757717487}
   Players: {fileID: 0}
   Animator: {fileID: 2039368499142816252}
+  animationT: 0
+  TransitionDurationForOpen: 0.4
+  TransitionDurationForClose: 0.075
+  DiscTransform: {fileID: 6456984106489099361}
+  DiscSpeed: 2
+  MaxDiscDistance: 0.1
 --- !u!95 &2039368499142816252
 Animator:
   serializedVersion: 3
@@ -406,5 +412,10 @@ Transform:
 --- !u!4 &1471925389161149145 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6976022077796124572, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
+  m_PrefabInstance: {fileID: 8404450593544222021}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6456984106489099361 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3258718942308729124, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
   m_PrefabInstance: {fileID: 8404450593544222021}
   m_PrefabAsset: {fileID: 0}

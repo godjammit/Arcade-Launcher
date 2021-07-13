@@ -443,6 +443,7 @@ MonoBehaviour:
   SelectionFalloff: 3
   FlipOutPosition: {fileID: 588317655}
   FlipOutDuration: 0.5
+  FlipBackDuration: 0.1
   FlipOutCurve:
     serializedVersion: 2
     m_Curve:
@@ -5340,7 +5341,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 588317654}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.35, y: 0, z: 1.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5439,7 +5440,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 22
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -5465,7 +5466,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658501647}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.5}
+  m_LocalPosition: {x: 0, y: 0, z: -4.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5735,6 +5736,10 @@ PrefabInstance:
     - target: {fileID: 6976022078798842914, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
       propertyPath: m_Name
       value: CD (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976022078798842914, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6976022078798842915, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
       propertyPath: m_RootOrder
@@ -6548,6 +6553,10 @@ PrefabInstance:
     - target: {fileID: 6976022078798842914, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
       propertyPath: m_Name
       value: CD
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976022078798842914, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6976022078798842915, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
       propertyPath: m_RootOrder
