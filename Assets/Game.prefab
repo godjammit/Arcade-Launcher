@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ef42cf0298e01145b9f71a5416db11d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Renderer: {fileID: 0}
+  Renderer: {fileID: 1471925389878502105}
   Title: {fileID: 1296478669757717487}
   Players: {fileID: 0}
   Animator: {fileID: 2039368499142816252}
@@ -342,6 +342,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6976022077796124575, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976022078513223582, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6976022078513223583, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -412,6 +420,11 @@ Transform:
 --- !u!4 &1471925389161149145 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6976022077796124572, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
+  m_PrefabInstance: {fileID: 8404450593544222021}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1471925389878502105 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6976022078513223580, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
   m_PrefabInstance: {fileID: 8404450593544222021}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &6456984106489099361 stripped

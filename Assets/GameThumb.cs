@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class GameThumb : MonoBehaviour
 {
 	public Renderer Renderer;
+	public int RendererMaterialIndex = 1;
 	public TMPro.TMP_Text Title;
 	public TMPro.TMP_Text Players;
 	public Animator Animator;
@@ -56,7 +57,7 @@ public class GameThumb : MonoBehaviour
 	public void Conf(GameAsset asset)
 	{
 		if (Renderer)
-			Renderer.material.mainTexture = asset.Card;
+			Renderer.materials[RendererMaterialIndex].mainTexture = asset.Card;
 
 		if (Title)
 			Title.text = asset.GameData.Title;
