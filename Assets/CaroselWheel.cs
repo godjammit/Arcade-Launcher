@@ -43,6 +43,9 @@ public class CaroselWheel : MonoBehaviour
 	public float FlipBackDuration = 0.1f;
 	public AnimationCurve FlipOutCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
+	public float SelectionFloatMagnitude = 0.01f;
+	public float SelectionFloatSpeed = 1f;
+
 	private void Start()
 	{
 		defaultScale = gamePrefab.transform.localScale;
@@ -85,6 +88,7 @@ public class CaroselWheel : MonoBehaviour
 		int startPoint = (AmountToSpawn * Mathf.CeilToInt(((float)min/(float)AmountToSpawn)));
 
 		Vector3 mountPoint = this.FlipOutPosition.position;
+		mountPoint += new Vector3(0f, Mathf.Sin(SelectionFloatSpeed * Time.time) * SelectionFloatMagnitude);
 
 		for (int i = 0; i < AmountToSpawn; i++)
 		{

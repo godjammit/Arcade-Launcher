@@ -46,12 +46,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Renderer: {fileID: 1471925389878502105}
+  RendererMaterialIndex: 1
   Title: {fileID: 1296478669757717487}
   Players: {fileID: 0}
   Animator: {fileID: 2039368499142816252}
   animationT: 0
   TransitionDurationForOpen: 0.4
-  TransitionDurationForClose: 0.075
+  TransitionDurationForClose: 0.02
   DiscTransform: {fileID: 6456984106489099361}
   DiscSpeed: 2
   MaxDiscDistance: 0.1
@@ -275,6 +276,19 @@ Transform:
   m_Father: {fileID: 3750561170056200299}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7578326749630873153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3424635824938664187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ea87fab4e1ea5249a9d4a03aab5903b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 65
 --- !u!1001 &8404450593544222021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -425,6 +439,11 @@ Transform:
 --- !u!23 &1471925389878502105 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 6976022078513223580, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
+  m_PrefabInstance: {fileID: 8404450593544222021}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3424635824938664187 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6567474668076135870, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
   m_PrefabInstance: {fileID: 8404450593544222021}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &6456984106489099361 stripped
