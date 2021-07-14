@@ -10,7 +10,7 @@ public class CaroselWheel : MonoBehaviour
 
 	public float _indexSmoothed;
 
-	public TextMesh title, author, players;
+	public TMPro.TMP_Text title, author, players;
 
 	public GameObject gamePrefab;
 	public GameObject gameContainer;
@@ -132,6 +132,9 @@ public class CaroselWheel : MonoBehaviour
 
 	private void Update()
 	{
+		if (Runner.IsLaunching == true)
+			return;
+
 		if (GetKeyInputDown()) // move to left game
 		{
 			ShiftTilesForward();
