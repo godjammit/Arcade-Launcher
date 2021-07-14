@@ -2,5 +2,8 @@
     "title": "Game 2",
     "author": "Tyler T",
     "players": 2,
-    "executable":"game2.exe"
+    "executable": "game2.exe",
+    "DiscColor": "#FFFFFFF",
+    "JewelCaseFrontColor": "#FFDD00",
+    "JewelCaseBackColor": "#00FFFF"
 }

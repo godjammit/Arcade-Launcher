@@ -56,6 +56,9 @@ MonoBehaviour:
   DiscTransform: {fileID: 6456984106489099361}
   DiscSpeed: 0.27
   MaxDiscDistance: 0.038
+  ShellRendererFront: {fileID: 1471925389878502105}
+  ShellRendererBack: {fileID: 1471925389161149144}
+  DiscRenderer: {fileID: 2713364286374573928}
 --- !u!95 &2039368499142816252
 Animator:
   serializedVersion: 3
@@ -436,6 +439,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6976022077796124572, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
   m_PrefabInstance: {fileID: 8404450593544222021}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &1471925389161149144 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6976022077796124573, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
+  m_PrefabInstance: {fileID: 8404450593544222021}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &1471925389878502105 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 6976022078513223580, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
@@ -449,5 +457,10 @@ GameObject:
 --- !u!4 &6456984106489099361 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3258718942308729124, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
+  m_PrefabInstance: {fileID: 8404450593544222021}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2713364286374573928 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5838166191013642797, guid: 542b6e58d4c42cc4faa85af7432800df, type: 3}
   m_PrefabInstance: {fileID: 8404450593544222021}
   m_PrefabAsset: {fileID: 0}

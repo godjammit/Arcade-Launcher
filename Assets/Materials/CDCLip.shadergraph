@@ -538,16 +538,16 @@
     },
     "m_Name": "BaseColor",
     "m_DefaultReferenceName": "Color_1480108c7bbf4906bd908f8d8d14a0f6",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_Color",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "r": 0.0,
-        "g": 0.0,
-        "b": 0.0,
+        "r": 0.5843137502670288,
+        "g": 0.5843137502670288,
+        "b": 0.5843137502670288,
         "a": 0.0
     },
     "m_ColorMode": 0

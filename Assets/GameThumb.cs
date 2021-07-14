@@ -25,6 +25,10 @@ public class GameThumb : MonoBehaviour
 	[Range(0.0001f, 1f)]
 	public float MaxDiscDistance = 0.1f;
 
+	public Renderer ShellRendererFront;
+	public Renderer ShellRendererBack;
+	public Renderer DiscRenderer;
+
 	private void Awake()
 	{
 		if (selectedHash == 0 && deselectedHash == 0)
@@ -59,8 +63,10 @@ public class GameThumb : MonoBehaviour
 		if (Renderer)
 			Renderer.materials[RendererMaterialIndex].mainTexture = asset.Card;
 
-		if (Title)
+		if (Title) {
+			Title.enabled = selectionState == false;
 			Title.text = asset.GameData.Title;
+		}
 
 		if (Players)
 		{
@@ -68,6 +74,28 @@ public class GameThumb : MonoBehaviour
 				Players.text = $"{asset.GameData.Players} Players";
 			else
 				Players.text = $"{asset.GameData.Players} Player";
+		}
+
+		if (ShellRendererFront)
+		{
+			Color c;
+			ColorUtility.TryParseHtmlString(asset.GameData.JewelCaseFrontColor, out c);
+			c.a = ShellRendererFront.materials[0].color.a;
+			ShellRendererFront.materials[0].color = c;
+		}
+		if (ShellRendererBack)
+		{
+			Color c;
+			ColorUtility.TryParseHtmlString(asset.GameData.JewelCaseBackColor, out c);
+			c.a = ShellRendererBack.materials[0].color.a;
+			ShellRendererBack.materials[0].color = c;
+		}
+		if (DiscRenderer)
+		{
+			Color c;
+			ColorUtility.TryParseHtmlString(asset.GameData.DiscColor, out c);
+			c.a = DiscRenderer.materials[0].color.a;
+			DiscRenderer.materials[0].color = c;
 		}
 	}
 
