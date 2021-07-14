@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class CaroselWheel : MonoBehaviour
 {
@@ -45,6 +45,9 @@ public class CaroselWheel : MonoBehaviour
 
 	public float SelectionFloatMagnitude = 0.01f;
 	public float SelectionFloatSpeed = 1f;
+
+	float timeSinceGameSelection;
+	public float TextRevealDuration = 0.75f;
 
 	private void Start()
 	{
@@ -149,12 +152,25 @@ public class CaroselWheel : MonoBehaviour
 		}
 
 		currentPositionFloat = NumericSpringing.Spring_Float(currentPositionFloat, ref currentPositionVel, (float)currentPositionTarget, Dampen, AngularFrequency, Time.deltaTime * Speed);
+
+		int prevPos = currentPosition;
 		currentPosition = Mathf.RoundToInt(currentPositionFloat);
+
+		//reset timer if index changed
+		if (prevPos != currentPosition)
+			timeSinceGameSelection = 0f;
+		timeSinceGameSelection += Time.deltaTime;
 
 		gameContainer.transform.localPosition = new Vector3(0f, currentPositionFloat * Spacing, 0f);
 
 		UpdateSelectionFields();
 		PositionGames();
+
+		//reload launcher after 9 hours to retain floating point accuracy
+		if (Time.timeSinceLevelLoad > 60f * 60f * 9f)
+		{
+			SceneManager.LoadScene(0);
+		}
 	}
 
 	private bool GetKeyInputLeft()
@@ -214,6 +230,22 @@ public class CaroselWheel : MonoBehaviour
 		title.text = data.Title;
 		author.text = data.Author;
 		players.text = data.Players + ((data.Players == 1) ? " Player" : " Players");
+
+		if (timeSinceGameSelection < TextRevealDuration)
+		{
+			var reveal01 = (1f - Mathf.Clamp01(timeSinceGameSelection / TextRevealDuration));
+			reveal01 *= reveal01 * reveal01; //cubed falloff
+
+			title.firstVisibleCharacter = Mathf.RoundToInt(reveal01 * (float)data.Title.Length);
+			author.firstVisibleCharacter = Mathf.RoundToInt(reveal01 * (float)data.Author.Length);
+			players.firstVisibleCharacter = Mathf.RoundToInt(reveal01 * (float)players.text.Length);
+		}
+		else
+		{
+			title.firstVisibleCharacter = 0;
+			author.firstVisibleCharacter = 0;
+			players.firstVisibleCharacter = 0;
+		}
 	}
 
 	int mod(int k, int n)
