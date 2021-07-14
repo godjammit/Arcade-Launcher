@@ -54,8 +54,8 @@ MonoBehaviour:
   TransitionDurationForOpen: 0.4
   TransitionDurationForClose: 0.02
   DiscTransform: {fileID: 6456984106489099361}
-  DiscSpeed: 2
-  MaxDiscDistance: 0.1
+  DiscSpeed: 0.27
+  MaxDiscDistance: 0.038
 --- !u!95 &2039368499142816252
 Animator:
   serializedVersion: 3
