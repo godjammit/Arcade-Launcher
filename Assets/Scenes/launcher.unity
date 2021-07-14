@@ -426,14 +426,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.2
-  gameSpacing: 180
+  gameSpacing: 190
   _indexSmoothed: 0
   title: {fileID: 1410231522}
   author: {fileID: 1173770124}
   players: {fileID: 1173770124}
   gamePrefab: {fileID: 100000, guid: 2c9ca7f1962c5a14d94e3b146d1166a9, type: 3}
   gameContainer: {fileID: 548647386}
-  AmountToSpawn: 30
+  AmountToSpawn: 35
   Runner: {fileID: 907348151}
   AngularFrequency: 2
   Dampen: 0.3
@@ -5908,7 +5908,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215370328}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.27, y: 0, z: 0}
+  m_LocalPosition: {x: -1.813, y: 0, z: 2.372}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 548647387}
