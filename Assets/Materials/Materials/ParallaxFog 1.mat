@@ -64,36 +64,36 @@ Material:
     - FINALCLAMPALPHA: 1
     - HASFOG: 0
     - PLAYERDISTANCEFADES: 0
-    - Vector1_15BF473A: 1
+    - Vector1_15BF473A: 0.83
     - Vector1_1ABD74A5: 0.0051
     - Vector1_1EEBCAD4: 1
     - Vector1_23D38491: 1
     - Vector1_4E1BE1EB: 0
     - Vector1_53e2c7322d044d2098639aa402a4f82e: 0.2
-    - Vector1_556D4648: 0.415
+    - Vector1_556D4648: 0.194
     - Vector1_5C39571: -0.03212
-    - Vector1_6538629B: 0.228
+    - Vector1_6538629B: 0.21
     - Vector1_66C2578D: 1
-    - Vector1_6DB23E14: 0.99
-    - Vector1_7DDD68FC: 0.99
-    - Vector1_87F7D3AD: 0.68
+    - Vector1_6DB23E14: 0
+    - Vector1_7DDD68FC: 1
+    - Vector1_87F7D3AD: 1
     - Vector1_A47B0E7: 10
     - Vector1_B823B86A: 0.01084
-    - Vector1_B9076577: 0.942
-    - Vector1_C2E3BF0D: 0.232
+    - Vector1_B9076577: 0.966
+    - Vector1_C2E3BF0D: 0.248
     - Vector1_CE27CFDA: 6.06
-    - Vector1_CE5261FF: 0.84
+    - Vector1_CE5261FF: 0.721
     - Vector1_D3006D96: 2.7
     - Vector1_D6251A5E: 0
     - Vector1_DB0BAA29: 1
-    - Vector1_E1D3F9EE: 13.3
+    - Vector1_E1D3F9EE: 4.51
     - Vector1_E4367093: -1.25
-    - Vector1_E6A02FD4: 1.18
+    - Vector1_E6A02FD4: 1.19
     - Vector1_EAF47A60: 0.743
-    - Vector1_EB42E0EE: 2.7
+    - Vector1_EB42E0EE: -2.67
     - Vector1_EB772389: 1
-    - Vector1_F2BB750A: 0.017
-    - Vector1_F9DFAE9: 0
+    - Vector1_F2BB750A: 0
+    - Vector1_F9DFAE9: 0.089
     - _parallaxOffset: 5
     - _scrollNoiseSpeedY: 1
     m_Colors:

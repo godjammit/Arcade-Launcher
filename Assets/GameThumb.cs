@@ -89,6 +89,7 @@ public class GameThumb : MonoBehaviour
 			ColorUtility.TryParseHtmlString(asset.GameData.JewelCaseBackColor, out c);
 			c.a = ShellRendererBack.materials[0].color.a;
 			ShellRendererBack.materials[0].color = c;
+			ShellRendererBack.materials[1].color = c;
 		}
 		if (DiscRenderer)
 		{
