@@ -3,11 +3,14 @@ using System.Diagnostics;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Playables;
+using UnityEngine.Audio;
 
 public class Runner : MonoBehaviour
 {
 	public bool IsLaunching;
 	public PlayableDirector Launch;
+	public AudioMixerSnapshot MixerGameLaunched;
+	public AudioMixerSnapshot MixerRegular;
 
 	public void Run(String path)
 	{
@@ -25,6 +28,8 @@ public class Runner : MonoBehaviour
 	IEnumerator RunProcess(Process process)
 	{
 		IsLaunching = true;
+		if (MixerGameLaunched)
+			MixerGameLaunched.TransitionTo(2f);
 
 		Launch.Play();
 		yield return new WaitForSeconds((float)Launch.duration - 0.25f);
@@ -36,6 +41,8 @@ public class Runner : MonoBehaviour
 		Screen.fullScreen = true;
 		Cursor.visible = false;
 		Launch.Stop();
+		if (MixerRegular)
+			MixerRegular.TransitionTo(2f);
 		IsLaunching = false;
 	}
 }

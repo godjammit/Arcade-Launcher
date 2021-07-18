@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class CaroselWheel : MonoBehaviour
 {
+	public AudioSource DownSFX, UpSFX;
+
 	public float speed;
 	public float gameSpacing;
 
@@ -221,6 +224,9 @@ public class CaroselWheel : MonoBehaviour
 		currentPositionTarget++;
 		int gamesIndex = mod(currentPositionTarget, gameAssets.Length);
 		Jukebox.Instance.PlaySong(gameAssets[gamesIndex].GameData.Song);
+		DownSFX.Stop();
+		DownSFX.time = 0f;
+		DownSFX.Play();
 	}
 
 	private void ShiftTilesBack()
@@ -228,6 +234,9 @@ public class CaroselWheel : MonoBehaviour
 		currentPositionTarget--;
 		int gamesIndex = mod(currentPositionTarget, gameAssets.Length);
 		Jukebox.Instance.PlaySong(gameAssets[gamesIndex].GameData.Song);
+		UpSFX.Stop();
+		UpSFX.time = 0f;
+		UpSFX.Play();
 	}
 
 	private void UpdateSelectionFields()
