@@ -52,6 +52,13 @@ public class CaroselWheel : MonoBehaviour
 	float timeSinceGameSelection;
 	public float TextRevealDuration = 0.75f;
 
+	const float holdInputRepeatDelay = 0.5f;
+	const float holdInputRepeatSpeed = 0.2f;
+	const float holdInputRepeat2Delay = 2f;
+	const float holdInputRepeat2Speed = 0.1f;
+	float upHoldTime;
+	float downHoldTime;
+
 	private void Start()
 	{
 		defaultScale = gamePrefab.transform.localScale;
@@ -139,6 +146,25 @@ public class CaroselWheel : MonoBehaviour
 		}
 	}
 
+	bool UpdateAndCheckInput(ref float timer)
+	{
+		float prevTime = timer;
+		timer += Time.unscaledDeltaTime;
+		if (timer > holdInputRepeat2Delay)
+		{
+			if ((timer % holdInputRepeat2Speed) < (prevTime % holdInputRepeat2Speed))
+				return true;
+		}
+		else
+		if (timer > holdInputRepeatDelay)
+		{
+			if ((timer % holdInputRepeatSpeed) < (prevTime % holdInputRepeatSpeed))
+				return true;
+		}
+
+		return false;
+	}
+
 	private void Update()
 	{
 		if (Runner.IsLaunching == true)
@@ -156,8 +182,35 @@ public class CaroselWheel : MonoBehaviour
 		{
 			LaunchGame();
 		}
+		else
+		{
+			if (GetKeyInputUpHeld())
+			{
+				if (UpdateAndCheckInput(ref upHoldTime))
+					ShiftTilesBack();
+			}
+			else
+			{
+				upHoldTime = 0f;
+			}
 
-		currentPositionFloat = NumericSpringing.Spring_Float(currentPositionFloat, ref currentPositionVel, (float)currentPositionTarget, Dampen, AngularFrequency, Time.deltaTime * Speed);
+			if (GetKeyInputDownHeld())
+			{
+				if (UpdateAndCheckInput(ref downHoldTime))
+					ShiftTilesForward();
+			}
+			else
+			{
+				downHoldTime = 0f;
+			}
+		}
+
+		currentPositionFloat = NumericSpringing.Spring_Float(
+				currentPositionFloat,
+				ref currentPositionVel,
+				(float)currentPositionTarget,
+				Dampen, AngularFrequency,
+				Time.deltaTime * Speed);
 
 		int prevPos = currentPosition;
 		currentPosition = Mathf.RoundToInt(currentPositionFloat);
@@ -178,23 +231,6 @@ public class CaroselWheel : MonoBehaviour
 			SceneManager.LoadScene(0);
 		}
 	}
-
-	private bool GetKeyInputLeft()
-	{
-		return Input.GetButtonDown("P1_Left")
-			|| Input.GetButtonDown("P2_Left")
-			|| Input.GetButtonDown("P3_Left")
-			|| Input.GetButtonDown("P4_Left");
-	}
-
-	private bool GetKeyInputRight()
-	{
-		return Input.GetButtonDown("P1_Right")
-			|| Input.GetButtonDown("P2_Right")
-			|| Input.GetButtonDown("P3_Right")
-			|| Input.GetButtonDown("P4_Right");
-	}
-
 	private bool GetKeyInputUp()
 	{
 		return Input.GetButtonDown("P1_Up")
@@ -209,6 +245,21 @@ public class CaroselWheel : MonoBehaviour
 			|| Input.GetButtonDown("P2_Down")
 			|| Input.GetButtonDown("P3_Down")
 			|| Input.GetButtonDown("P4_Down");
+	}
+	private bool GetKeyInputUpHeld()
+	{
+		return Input.GetButton("P1_Up")
+			|| Input.GetButton("P2_Up")
+			|| Input.GetButton("P3_Up")
+			|| Input.GetButton("P4_Up");
+	}
+
+	private bool GetKeyInputDownHeld()
+	{
+		return Input.GetButton("P1_Down")
+			|| Input.GetButton("P2_Down")
+			|| Input.GetButton("P3_Down")
+			|| Input.GetButton("P4_Down");
 	}
 
 	private bool GetKeyInputButton1()
@@ -225,7 +276,6 @@ public class CaroselWheel : MonoBehaviour
 		int gamesIndex = mod(currentPositionTarget, gameAssets.Length);
 		Jukebox.Instance.PlaySong(gameAssets[gamesIndex].GameData.Song);
 		DownSFX.Stop();
-		DownSFX.time = 0f;
 		DownSFX.Play();
 	}
 
@@ -235,7 +285,6 @@ public class CaroselWheel : MonoBehaviour
 		int gamesIndex = mod(currentPositionTarget, gameAssets.Length);
 		Jukebox.Instance.PlaySong(gameAssets[gamesIndex].GameData.Song);
 		UpSFX.Stop();
-		UpSFX.time = 0f;
 		UpSFX.Play();
 	}
 

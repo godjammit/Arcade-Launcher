@@ -29,6 +29,8 @@ public class GameThumb : MonoBehaviour
 	public Renderer ShellRendererBack;
 	public Renderer DiscRenderer;
 
+	int propertyName_BaseMap;
+
 	private void Awake()
 	{
 		if (selectedHash == 0 && deselectedHash == 0)
@@ -36,6 +38,7 @@ public class GameThumb : MonoBehaviour
 			selectedHash = Animator.StringToHash("Selected");
 			deselectedHash = Animator.StringToHash("Deselected");
 		}
+		propertyName_BaseMap = Shader.PropertyToID("_BaseMap");
 	}
 
 	private void LateUpdate()
@@ -58,8 +61,14 @@ public class GameThumb : MonoBehaviour
 		}
 	}
 
+	GameAsset configuredAsset = null;
+
 	public void Conf(GameAsset asset)
 	{
+		if (asset == configuredAsset)
+			return;
+		configuredAsset = asset;
+
 		if (Renderer)
 			Renderer.materials[RendererMaterialIndex].mainTexture = asset.Card;
 
@@ -89,7 +98,10 @@ public class GameThumb : MonoBehaviour
 			ColorUtility.TryParseHtmlString(asset.GameData.JewelCaseBackColor, out c);
 			c.a = ShellRendererBack.materials[0].color.a;
 			ShellRendererBack.materials[0].color = c;
+			Vector2 offset = Vector2.zero;
+			ShellRendererBack.materials[0].SetTextureOffset(propertyName_BaseMap, new Vector2(Random.Range(0f, 1f), Random.Range(0f, 1f)));
 			ShellRendererBack.materials[1].color = c;
+			ShellRendererBack.materials[1].SetTextureOffset(propertyName_BaseMap, new Vector2(Random.Range(0f, 1f), Random.Range(0f, 1f)));
 		}
 		if (DiscRenderer)
 		{
