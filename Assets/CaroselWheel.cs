@@ -276,6 +276,7 @@ public class CaroselWheel : MonoBehaviour
 		int gamesIndex = mod(currentPositionTarget, gameAssets.Length);
 		Jukebox.Instance.PlaySong(gameAssets[gamesIndex].GameData.Song);
 		DownSFX.Stop();
+		DownSFX.pitch = Random.Range(.75f, 1f);
 		DownSFX.Play();
 	}
 
@@ -285,6 +286,7 @@ public class CaroselWheel : MonoBehaviour
 		int gamesIndex = mod(currentPositionTarget, gameAssets.Length);
 		Jukebox.Instance.PlaySong(gameAssets[gamesIndex].GameData.Song);
 		UpSFX.Stop();
+		UpSFX.pitch = Random.Range(1f, 1.25f);
 		UpSFX.Play();
 	}
 
