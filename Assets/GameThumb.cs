@@ -73,7 +73,6 @@ public class GameThumb : MonoBehaviour
 			Renderer.materials[RendererMaterialIndex].mainTexture = asset.Card;
 
 		if (Title) {
-			Title.enabled = selectionState == false;
 			Title.text = asset.GameData.Title;
 		}
 
@@ -114,6 +113,11 @@ public class GameThumb : MonoBehaviour
 
 	public void SetSelection(bool val)
 	{
+		if (Title)
+		{
+			Title.enabled = selectionState == false;
+		}
+
 		if (Animator.IsInTransition(0))
 		{
 			if (val && selectionState == false)

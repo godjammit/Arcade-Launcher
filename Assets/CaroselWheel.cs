@@ -53,8 +53,8 @@ public class CaroselWheel : MonoBehaviour
 	public float TextRevealDuration = 0.75f;
 
 	const float holdInputRepeatDelay = 0.5f;
-	const float holdInputRepeatSpeed = 0.2f;
-	const float holdInputRepeat2Delay = 2f;
+	const float holdInputRepeatSpeed = .4f;
+	const float holdInputRepeat2Delay = 3f;
 	const float holdInputRepeat2Speed = 0.1f;
 	float upHoldTime;
 	float downHoldTime;
