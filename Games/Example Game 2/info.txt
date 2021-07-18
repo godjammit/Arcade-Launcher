@@ -5,5 +5,6 @@
     "executable": "game2.exe",
     "DiscColor": "#FFFFFFF",
     "JewelCaseFrontColor": "#FFDD00",
-    "JewelCaseBackColor": "#00FFFF"
+    "JewelCaseBackColor": "#00FFFF",
+    "Song": "Puzzle"
 }

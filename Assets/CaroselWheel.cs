@@ -64,6 +64,9 @@ public class CaroselWheel : MonoBehaviour
 			InstantiateGames(assets);
 			UpdateSelectionFields();
 		}
+
+		int gamesIndex = mod(currentPositionTarget, gameAssets.Length);
+		Jukebox.Instance.PlaySong(gameAssets[gamesIndex].GameData.Song);
 	}
 
 	private void InstantiateGames(List<GameAsset> a)
@@ -216,11 +219,15 @@ public class CaroselWheel : MonoBehaviour
 	private void ShiftTilesForward()
 	{
 		currentPositionTarget++;
+		int gamesIndex = mod(currentPositionTarget, gameAssets.Length);
+		Jukebox.Instance.PlaySong(gameAssets[gamesIndex].GameData.Song);
 	}
 
 	private void ShiftTilesBack()
 	{
 		currentPositionTarget--;
+		int gamesIndex = mod(currentPositionTarget, gameAssets.Length);
+		Jukebox.Instance.PlaySong(gameAssets[gamesIndex].GameData.Song);
 	}
 
 	private void UpdateSelectionFields()

@@ -10,4 +10,5 @@ public class Game
     public string DiscColor { get; set; }
     public string JewelCaseFrontColor { get; set; }
     public string JewelCaseBackColor { get; set; }
+    public string Song { get; set; }
 }

@@ -1,0 +1,10 @@
+{
+    "title": "Game 4 Party",
+    "author": "20 Million Devs",
+    "players": 4,
+    "executable": "game2.exe",
+    "DiscColor": "#00ff00",
+    "JewelCaseFrontColor": "#00ff00",
+    "JewelCaseBackColor": "#002244",
+    "Song": "Party"
+}

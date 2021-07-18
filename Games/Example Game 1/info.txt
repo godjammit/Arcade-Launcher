@@ -5,5 +5,6 @@
     "executable": "EmptyProject.exe",
 	"DiscColor": "#110011",
     "JewelCaseFrontColor": "#111111",
-    "JewelCaseBackColor": "#000000"
+    "JewelCaseBackColor": "#000000",
+    "Song": "Creepy"
 }
