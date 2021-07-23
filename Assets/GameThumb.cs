@@ -72,16 +72,22 @@ public class GameThumb : MonoBehaviour
 		if (Renderer)
 			Renderer.materials[RendererMaterialIndex].mainTexture = asset.Card;
 
-		if (Title) {
+		if (Title)
+		{
 			Title.text = asset.GameData.Title;
 		}
 
 		if (Players)
 		{
-			if (asset.GameData.Players > 1)
-				Players.text = $"{asset.GameData.Players} Players";
+			int min = asset.GameData.PlayersMin;
+			int max = asset.GameData.PlayersMax;
+			if (max > 1 && min != max)
+				Players.text = $"{min}-{max} Players";
+			else if (max > 1)
+
+				Players.text = $"{max} Players";
 			else
-				Players.text = $"{asset.GameData.Players} Player";
+				Players.text = $"{max} Player";
 		}
 
 		if (ShellRendererFront)

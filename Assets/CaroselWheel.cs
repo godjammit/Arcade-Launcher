@@ -296,7 +296,16 @@ public class CaroselWheel : MonoBehaviour
 		Game data = gameAssets[index].GameData;
 		title.text = data.Title;
 		author.text = data.Author;
-		players.text = data.Players + ((data.Players == 1) ? " Player" : " Players");
+
+		int min = data.PlayersMin;
+		int max = data.PlayersMax;
+		if (max > 1 && min != max)
+			players.text = $"{min}-{max} Players";
+		else if (max > 1)
+
+			players.text = $"{max} Players";
+		else
+			players.text = $"{max} Player";
 
 		if (timeSinceGameSelection < TextRevealDuration)
 		{
