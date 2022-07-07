@@ -1,0 +1,10 @@
+{
+    "title": "Game 4",
+    "author": "Anon x 4",
+    "players": 2,
+    "executable": "game2.exe",
+    "DiscColor": "#FF0000",
+    "JewelCaseFrontColor": "#000000",
+    "JewelCaseBackColor": "#FF0000",
+    "Song": "Action"
+}

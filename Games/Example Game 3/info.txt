@@ -1,0 +1,10 @@
+{
+    "title": "Cute 3",
+    "author": "Anon",
+    "players": 3,
+    "executable": "game2.exe",
+    "DiscColor": "#00881b",
+    "JewelCaseFrontColor": "#000000",
+    "JewelCaseBackColor": "#FF00FF",
+    "Song": "Cute"
+}

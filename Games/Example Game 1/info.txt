@@ -2,5 +2,9 @@
     "title": "Game 1",
     "author": "Author Test Field Longer Name",
     "players": 4,
-    "executable":"game1.exe"
+    "executable": "EmptyProject.exe",
+	"DiscColor": "#110011",
+    "JewelCaseFrontColor": "#111111",
+    "JewelCaseBackColor": "#000000",
+    "Song": "Creepy"
 }

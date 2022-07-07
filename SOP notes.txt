@@ -1,0 +1,18 @@
+SOP cab
+
+Glube
+- block jiggles
+- Move game - whole thing moves, top jiggles (ease out) - reinforce input directions 
+- Animated tenticles
+- Fake translucency - sold inside, colored transparent outside 
+- eyeball  
+
+- low rez stick figures in the background 
+- what's the background
+
+features
+
+- Daily featured game (random)  
+- Color palette shift with game	
+	What's the background? 
+		

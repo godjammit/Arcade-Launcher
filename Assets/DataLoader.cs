@@ -43,6 +43,7 @@ public class DataLoader
 
 				// get Game
 				string text = File.ReadAllText(info[0]);
+
 				Game game = JsonConvert.DeserializeObject<Game>(text);
 				asset.GameData = game;
 
